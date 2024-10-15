@@ -1,0 +1,57 @@
+{
+  "name": "react-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start:local": "env-cmd -f environments/.env.local react-scripts start",
+    "build:local": "env-cmd -f environments/.env.local react-scripts build"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.1.1",
+    "@mui/joy": "^5.0.0-beta.48",
+    "@mui/lab": "^6.0.0-beta.11",
+    "@mui/material": "^6.1.1",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.7.7",
+    "formik": "^2.4.6",
+    "moment": "^2.30.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-drag-drop-files": "^2.3.10",
+    "react-router-dom": "^6.26.2",
+    "react-scripts": "5.0.1",
+    "socket.io-client": "^4.8.0",
+    "typescript": "^4.9.5",
+    "use-axios-loader": "^1.1.0"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.18.6"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "rules": {
+      "react-hooks/exhaustive-deps": "off",
+      "jsx-a11y/anchor-is-valid": "off"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

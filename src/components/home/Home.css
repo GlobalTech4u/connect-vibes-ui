@@ -1,0 +1,38 @@
+.home-container {
+  width: 100%;
+}
+
+.home-body-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 64px;
+  justify-content: space-between;
+  background-color: var(--color-light-gray);
+  position: relative;
+}
+
+.home-proteced-routes {
+  padding: 24px;
+}
+
+.MuiDrawer-docked {
+  flex: 0 0 15%;
+}
+
+.search-results-container {
+  width: 560px;
+  height: min-content;
+  max-height: 40%;
+  position: fixed !important;
+  top: 64px !important;
+  left: 50% !important;
+  transform: translate(-50%, 0%);
+  z-index: 1000 !important;
+  min-width: 350px;
+  background: white !important;
+  padding-bottom: 18px;
+  overflow: auto;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}

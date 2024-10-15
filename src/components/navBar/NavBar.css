@@ -1,0 +1,64 @@
+.nav-bar-container {
+  .app-name {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-large);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .search-wrapper {
+    display: flex;
+    position: relative;
+    border-radius: 30px;
+    background-color: white;
+    color: black;
+    margin-right: 8px;
+    margin-left: 8px;
+    width: 100%;
+    min-width: 120px;
+  }
+
+  @media (min-width: 1200px) {
+    .search-wrapper {
+      width: auto;
+      min-width: 480px;
+    }
+  }
+
+  .search-icon-wrapper {
+    padding: 8px;
+    height: 100%;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .search-field {
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-normal);
+    font-size: var(--font-size-medium);
+    max-width: 460px;
+
+    &::before {
+      border-bottom: none !important;
+      transition: none !important;
+    }
+
+    &::after {
+      border-bottom: none !important;
+      transition: none !important;
+    }
+  }
+}
+
+.navbar-menu-item {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-normal);
+}
+
+.navbar-menu-item-mobile {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-normal);
+}

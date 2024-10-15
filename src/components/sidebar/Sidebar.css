@@ -1,0 +1,33 @@
+.MuiDrawer-paper {
+  top: 64px !important;
+  padding: 16px 24px;
+}
+
+.side-bar {
+  height: calc(100vh - 50px);
+  overflow-y: scroll;
+  position: sticky;
+  top: 50px;
+
+  .sidebar-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .listitem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .icon {
+    margin-right: 15px;
+  }
+
+  .listitem-text {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-medium);
+    font-weight: var(--font-weight-normal);
+  }
+}

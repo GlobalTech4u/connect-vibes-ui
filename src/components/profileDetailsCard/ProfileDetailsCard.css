@@ -1,0 +1,133 @@
+.about-tab-card {
+  width: 100%;
+  min-width: 100%;
+
+  .MuiTabs-flexContainer {
+    align-items: flex-start;
+  }
+
+  .MuiTabs-root {
+    flex-shrink: 0;
+  }
+
+  .MuiTab-root {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-medium);
+    font-weight: var(--font-weight-medium);
+    align-items: flex-start;
+    padding: 0;
+  }
+
+  .MuiTabs-indicator {
+    display: none;
+  }
+
+  .MuiInput-root {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-medium);
+    font-weight: var(--font-weight-normal);
+    color: var(--font-color-black);
+  }
+
+  .MuiInput-input {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-medium);
+    font-weight: var(--font-weight-normal);
+    color: var(--font-color-gray);
+  }
+
+  .MuiOutlinedInput-input {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-medium);
+    font-weight: var(--font-weight-normal);
+    color: var(--font-color-gray);
+  }
+
+  .MuiInputLabel-root {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-large);
+    font-weight: var(--font-weight-normal);
+    color: var(--font-color-black);
+  }
+
+  .card-header-actions {
+    display: flex;
+    flex-direction: row;
+    column-gap: 24px;
+  }
+
+  .about-section-tab-panel {
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+    width: 100%;
+    padding: 24px;
+  }
+
+  .about-tab-contents {
+    display: flex;
+    flex-direction: row;
+    column-gap: 64px;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .about-tab-content {
+    display: flex;
+    flex-direction: row;
+    column-gap: 128px;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .MuiCardHeader-root {
+    padding: 16px 16px 0 16px;
+  }
+
+  .about-tab-content-editing {
+    display: flex;
+    flex-direction: row;
+    column-gap: 24px;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+  }
+
+  .area-code-text {
+    flex: 0 1 30%;
+  }
+
+  .number-text {
+    flex: 1 0 70%;
+  }
+
+  .about-tab-displaying {
+    display: flex;
+    flex-direction: row;
+    column-gap: 8px;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .content-text-displaying {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-medium);
+    font-weight: var(--font-weight-normal);
+    color: var(--font-color-gray);
+  }
+
+  .content-text-editing {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-medium);
+    font-weight: var(--font-weight-normal);
+    color: var(--font-color-gray);
+  }
+}
+
+.options {
+  font-family: var(--font-primary) !important;
+  font-size: var(--font-size-medium) !important;
+  font-weight: var(--font-weight-normal) !important;
+  color: var(--font-color-gray) !important;
+}

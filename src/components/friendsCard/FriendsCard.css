@@ -1,0 +1,33 @@
+.friends-card {
+  .friends-card-content {
+    display: flex;
+    flex-direction: row;
+    column-gap: 12px;
+    row-gap: 12px;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .friend-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .friend-name {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-medium);
+    font-weight: var(--font-weight-normal);
+    color: var(--font-color-gray);
+    text-align: center;
+  }
+}
+
+.left-container-sticky {
+  position: sticky;
+  top: 64px;
+  height: fit-content;
+}

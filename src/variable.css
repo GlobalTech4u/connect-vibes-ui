@@ -1,0 +1,40 @@
+:root {
+  /* colors */
+  --color-white: #fff;
+  --color-red: #e62c2c;
+  --color-light-gray: #f2f4f7;
+
+  /* fonts */
+  --font-primary: "Ubuntu", "Roboto", sans-serif;
+  --font-secondary: "Roboto", "Ubuntu", sans-serif;
+
+  /* font colors */
+  --font-color-white: #fff;
+  --font-color-black: #000000;
+  --font-color-gray: #535353;
+  --font-color-red: #e62c2c;
+
+  /* font weights */
+  --font-weight-light: 400;
+  --font-weight-normal: 500;
+  --font-weight-medium: 600;
+  --font-weight-semi-bold: 700;
+  --font-weight-bold: 800;
+
+  /* font sizes */
+  --font-size-extra-small: 14px;
+  --font-size-small: 16px;
+  --font-size-medium: 18px;
+  --font-size-large: 24px;
+  --font-size-extra-large: 30px;
+
+  /* breakpoints */
+  --extra-small: 0px;
+  --small: 600px;
+  --medium: 900px;
+  --large: 1200px;
+  --extra-large: 1536px;
+
+  /* common constants */
+  --navbar-height: 64px;
+}
