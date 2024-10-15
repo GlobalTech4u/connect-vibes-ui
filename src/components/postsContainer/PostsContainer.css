@@ -1,0 +1,10 @@
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  column-gap: 24px;
+  row-gap: 24px;
+  max-width: 100%;
+  flex-wrap: wrap;
+  flex: 0 0 65%;
+}

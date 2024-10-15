@@ -1,0 +1,90 @@
+body {
+  margin: 0;
+  font-family: var(--font-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-light-gray);
+
+  .MuiInput-root {
+    width: 100%;
+  }
+
+  .MuiTextField-root {
+    width: 100%;
+  }
+
+  .MuiOutlinedInput-root {
+    width: 100%;
+  }
+
+  .MuiOutlinedInput-input {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-small);
+  }
+
+  .MuiInputLabel-root {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-medium);
+  }
+
+  .MuiButton-containedPrimary {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-medium);
+  }
+
+  .MuiButton-colorPrimary {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-medium);
+  }
+
+  .MuiModal-backdrop {
+    background-color: unset !important;
+  }
+
+  .card-header {
+    .MuiTypography-root {
+      font-family: var(--font-primary);
+      font-size: var(--font-size-large);
+      font-weight: var(--font-weight-medium);
+      color: var(--font-color-gray);
+    }
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  .error {
+    color: red;
+    text-align: right;
+    margin-top: -10px;
+  }
+
+  .modal-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    border: 2px solid #f1ebeb;
+    background-color: var(--color-white);
+  }
+
+  .modal-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 24px 0;
+  }
+
+  .modal-body {
+    margin: 24px;
+  }
+
+  .modal-title {
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-semi-bold);
+    font-size: var(--font-size-extra-large);
+    margin: 0;
+  }
+}

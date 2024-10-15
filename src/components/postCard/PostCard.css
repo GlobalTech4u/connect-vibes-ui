@@ -1,0 +1,44 @@
+.view-post-card {
+  position: relative;
+
+  .MuiCardMedia {
+    width: 100%;
+  }
+
+  .MuiTypography-root {
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-medium);
+  }
+
+  .post-content-text {
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-normal);
+    font-size: var(--font-size-medium);
+    color: var(--font-color-gray);
+  }
+
+  .post-card-content {
+    margin-bottom: 0;
+  }
+
+  .post-card-footer {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    column-gap: 12px;
+    bottom: 8px;
+    left: 0;
+    padding: 16px;
+  }
+
+  .post-card-attachments {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    column-gap: 8px;
+    padding: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 64px;
+  }
+}

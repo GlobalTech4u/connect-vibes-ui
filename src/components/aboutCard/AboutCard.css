@@ -1,0 +1,40 @@
+.about-card {
+  .MuiCardHeader-root {
+    padding: 16px 16px 0 16px;
+  }
+
+  .aboutme {
+    padding: 8px 0;
+  }
+
+  .about-contents {
+    display: flex;
+    flex-direction: column;
+    row-gap: 6px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 8px;
+  }
+
+  .about-content {
+    display: flex;
+    flex-direction: row;
+    column-gap: 6px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 8px;
+  }
+
+  .about-card-text {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-medium);
+    font-weight: var(--font-weight-normal);
+    color: var(--font-color-gray);
+  }
+}
+
+.left-container-sticky {
+  position: sticky;
+  top: 64px;
+  height: fit-content;
+}
