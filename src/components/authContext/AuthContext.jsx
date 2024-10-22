@@ -13,11 +13,12 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const user = getUser();
-    setToken(user?.token || null);
-    setIsLoggedIn(!!user?.token);
+    const token = user?.token;
+    setToken(token || null);
+    setIsLoggedIn(!!token);
     setLoading(false);
     initializeSocket(user?._id || null);
-    initializeAxios(user?.token || null);
+    initializeAxios(token || null);
   }, [localStorage.getItem("user")]);
 
   return (

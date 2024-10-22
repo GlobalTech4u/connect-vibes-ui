@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
 
 import {
   Card,
@@ -27,14 +28,18 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import EditOffOutlinedIcon from "@mui/icons-material/EditOffOutlined";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 
-import { getUserById, updateUser } from "services/user.service";
-import { ABOUT_SECTION_TABS_MENU_ITEMS } from "constants/common.constant";
+import { updateUser } from "reduxStore/slices/usersSlice";
+import {
+  ABOUT_SECTION_TABS_MENU_ITEMS,
+  REDUX_ACTION,
+} from "constants/common.constant";
 
 import "./ProfileDetailsCard.css";
 
 const ProfileDetailsCard = (props) => {
-  const { user, isEditing, isCurrentUser, onEdit, setUser } = props;
+  const { user, isEditing, isCurrentUser, onEdit, getProfileUser } = props;
   const [currentTab, setCurrentTab] = useState("basic");
+  const dispatch = useDispatch();
 
   const onUpdateUser = async (values) => {
     const payload = {
@@ -52,26 +57,15 @@ const ProfileDetailsCard = (props) => {
         areaCode: values?.areaCode,
         number: values?.number,
       },
+      _id: user?._id,
     };
 
-    updateUser(user?._id, payload)
-      .then((res) => {
-        console.log(res);
-        if (res?.status === 201) {
-          onEdit();
-          getUserById({ userId: user?._id }).then((res) => {
-            const currentUser = {
-              ...res?.data?.user,
-              token: user?.token,
-            };
-            setUser(currentUser);
-            localStorage.setItem("user", JSON.stringify(currentUser));
-          });
-        }
-      })
-      .catch((error) => {
-        console.log("cannot update user");
-      });
+    dispatch(updateUser(payload)).then((res) => {
+      if (res?.meta?.requestStatus === REDUX_ACTION.FULFILLED) {
+        onEdit();
+        getProfileUser();
+      }
+    });
   };
 
   const formik = useFormik({

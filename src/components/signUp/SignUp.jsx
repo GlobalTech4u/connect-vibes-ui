@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { useFormik } from "formik";
 import { Navigate, useNavigate } from "react-router-dom";
 import { FileUploader } from "react-drag-drop-files";
+import { useDispatch } from "react-redux";
 
 import { TextField, Select, MenuItem, Alert, Button } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
@@ -14,9 +15,9 @@ import FormControl from "@mui/material/FormControl";
 
 import LABELS from "constants/label.constant";
 import { AuthContext } from "components/authContext/AuthContext";
-import { createUser } from "services/user.service";
+import { createUser } from "reduxStore/slices/usersSlice";
 import { validateRegister } from "helpers/validate.helper";
-import { FILE_TYPES } from "constants/common.constant";
+import { FILE_TYPES, REDUX_ACTION } from "constants/common.constant";
 
 import "./SignUp.css";
 
@@ -25,6 +26,7 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const submitSignUpForm = async (values) => {
     const payload = {
@@ -36,13 +38,11 @@ const SignUp = () => {
       profilePicture: values?.profilePicture,
     };
 
-    createUser(payload)
-      .then((res) => {
-        if (res?.status === 201) {
-          navigate("/login");
-        }
-      })
-      .catch((error) => console.log(error));
+    dispatch(createUser(payload)).then((res) => {
+      if (res?.meta?.requestStatus === REDUX_ACTION.FULFILLED) {
+        navigate("/login");
+      }
+    });
   };
 
   const handleProfilePictureUpload = (file) => {

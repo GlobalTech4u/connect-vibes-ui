@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 import Navbar from "components/navBar/NavBar";
 import Sidebar from "components/sidebar/Sidebar";
 import SearchUserModal from "components/searchUserModal/SearchUserModal";
 import { AuthContext } from "components/authContext/AuthContext";
 import useDebounce from "hooks/useDebounce";
-import { getUser } from "helpers/user.helper";
-import { getUsers } from "services/user.service";
+import { getUsers } from "reduxStore/slices/searchUserSlice";
 
 import "./Home.css";
 
@@ -16,9 +16,10 @@ const Home = () => {
   const [showDrawer, setShowDrawer] = useState(true);
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [users, setUsers] = useState([]);
-  const [user, setUser] = useState("");
+  const user = useSelector((state) => state?.auth?.user);
+  const users = useSelector((state) => state?.search?.users);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const debouncedSearchQuery = useDebounce(searchQuery);
 
@@ -28,27 +29,12 @@ const Home = () => {
     }
   }, [isLoggedIn]);
 
-  useEffect(() => {
-    const user = getUser();
-    setUser(user);
-  }, []);
-
   const onShowSearchResults = () => setShowSearchResults(true);
   const onHideSearchResults = () => setShowSearchResults(false);
 
   useEffect(() => {
     debouncedSearchQuery
-      ? getUsers({ searchQuery: debouncedSearchQuery })
-          .then((res) => {
-            if (res?.status === 200) {
-              setUsers(res?.data?.users);
-              onShowSearchResults();
-            }
-          })
-          .catch((error) => {
-            setUsers([]);
-            onHideSearchResults();
-          })
+      ? dispatch(getUsers({ searchQuery: debouncedSearchQuery }))
       : onHideSearchResults();
   }, [debouncedSearchQuery]);
 

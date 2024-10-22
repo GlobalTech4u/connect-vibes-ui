@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
+import { useDispatch } from "react-redux";
 
 import { Avatar, Button, Modal } from "@mui/material";
 import { red } from "@mui/material/colors";
@@ -10,10 +11,11 @@ import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import Textarea from "@mui/joy/Textarea";
 
 import { socket } from "utils/socket";
-import { createPost } from "services/post.service";
+import { createPost } from "reduxStore/slices/postSlice";
 import {
   CREATE_POST_ATTACHMENTS_OPTIONS,
   FILE_TYPES,
+  REDUX_ACTION,
   WRITE_POST_PLACEHOLDER,
 } from "constants/common.constant";
 
@@ -31,6 +33,8 @@ const CreatePostModal = (props) => {
     userId,
     name,
   } = props;
+
+  const dispatch = useDispatch();
 
   const onChangeContent = (event) => {
     setContent(event?.target?.value);
@@ -52,20 +56,19 @@ const CreatePostModal = (props) => {
       const payload = {
         content: content,
         postAttachments: files,
+        userId: userId,
       };
 
-      createPost(userId, payload)
-        .then((res) => {
-          if (res?.status === 201) {
-            getPosts();
-            onHideCreatePostModal();
-            socket?.emit("add_post", {
-              userId: userId,
-              followers: followersId,
-            });
-          }
-        })
-        .catch((error) => console.log(error));
+      dispatch(createPost(payload)).then((res) => {
+        if (res?.meta?.requestStatus === REDUX_ACTION.FULFILLED) {
+          getPosts();
+          onHideCreatePostModal();
+          socket?.emit("add_post", {
+            userId: userId,
+            followers: followersId,
+          });
+        }
+      });
     }
   };
 
