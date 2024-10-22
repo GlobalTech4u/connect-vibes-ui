@@ -1,5 +1,6 @@
 import * as React from "react";
 import moment from "moment";
+import { useDispatch } from "react-redux";
 
 import {
   Card,
@@ -17,13 +18,14 @@ import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
+import { REDUX_ACTION } from "constants/common.constant";
 import { getFullName } from "helpers/user.helper";
 import {
   deletePost,
   likePost,
   sharePost,
   unlikePost,
-} from "services/post.service";
+} from "reduxStore/slices/postSlice";
 
 import "./PostCard.css";
 
@@ -35,6 +37,8 @@ const PostCard = (props) => {
   const { post, userId, getPosts } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const dispatch = useDispatch();
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -48,9 +52,9 @@ const PostCard = (props) => {
         userId: userId,
         postId: post?._id,
       };
-      deletePost(payload)
+      dispatch(deletePost(payload))
         .then((res) => {
-          if (res?.status === 204) {
+          if (res?.meta?.requestStatus === REDUX_ACTION.FULFILLED) {
             getPosts();
           }
         })
@@ -65,9 +69,9 @@ const PostCard = (props) => {
       userId: userId,
       postId: post?._id,
     };
-    likePost(payload)
+    dispatch(likePost(payload))
       .then((res) => {
-        if (res?.status === 201) {
+        if (res?.meta?.requestStatus === REDUX_ACTION.FULFILLED) {
           getPosts();
         }
       })
@@ -81,7 +85,7 @@ const PostCard = (props) => {
     };
     unlikePost(payload)
       .then((res) => {
-        if (res?.status === 204) {
+        if (res?.meta?.requestStatus === REDUX_ACTION.FULFILLED) {
           getPosts();
         }
       })
@@ -89,9 +93,8 @@ const PostCard = (props) => {
   };
 
   const onSharePost = () => {
-    sharePost(userId, post?._id).then((res) => {
-      console.log(res);
-      if (res?.status === 201) {
+    dispatch(sharePost(userId, post?._id)).then((res) => {
+      if (res?.meta?.requestStatus === REDUX_ACTION.FULFILLED) {
         getPosts();
       }
     });

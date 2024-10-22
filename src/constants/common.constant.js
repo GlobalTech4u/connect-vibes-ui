@@ -36,3 +36,7 @@ export const ABOUT_SECTION_TABS_MENU_ITEMS = {
   CONTACT: "Contact",
   ABOUT: "About",
 };
+
+export const REDUX_ACTION = {
+  FULFILLED: "fulfilled",
+};

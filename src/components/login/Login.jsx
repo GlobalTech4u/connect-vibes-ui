@@ -2,19 +2,22 @@ import { useContext } from "react";
 import { useFormik } from "formik";
 import { TextField, Alert, Button } from "@mui/material";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import LABELS from "constants/label.constant";
 import initializeAxios from "services/axios.service";
 import initializeSocket from "utils/socket";
-import { loginUser } from "services/auth.service";
+import { loginUser } from "reduxStore/slices/authSlice";
 import { AuthContext } from "components/authContext/AuthContext";
 import { validateLogin } from "helpers/validate.helper";
+import { REDUX_ACTION } from "constants/common.constant";
 
 import "./Login.css";
 
 const Login = () => {
   const { token, setToken } = useContext(AuthContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const submitSignInForm = async (values) => {
     const payload = {
@@ -22,15 +25,15 @@ const Login = () => {
       password: values?.password,
     };
 
-    loginUser(payload)
+    dispatch(loginUser(payload))
       .then((res) => {
-        if (res?.status === 200) {
-          const user = res?.data?.user;
-          setToken(user?.token);
+        if (res?.meta?.requestStatus === REDUX_ACTION.FULFILLED) {
+          const user = res?.payload?.user;
+          const token = user?.token;
           localStorage.setItem("user", JSON.stringify(user));
-          navigate("/");
           initializeSocket(user?._id);
-          initializeAxios(user?.token);
+          initializeAxios(token);
+          navigate("/");
         }
       })
       .catch((err) => {

@@ -1,23 +1,28 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Box, Button, Divider, Tab, Tabs } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
 
 import AboutCard from "components/aboutCard/AboutCard";
 import CreatePost from "components/createPost/CreatePost";
 import FriendsCard from "components/friendsCard/FriendsCard";
 import PostsContainer from "components/postsContainer/PostsContainer";
 import ProfileDetailsCard from "components/profileDetailsCard/ProfileDetailsCard";
-import { fetchPostsByUserId } from "services/post.service";
-import { getFullName, getUser } from "helpers/user.helper";
-import { PROFILE_TABS_MENU_ITEMS } from "constants/common.constant";
+import { getFullName } from "helpers/user.helper";
 import { socket } from "utils/socket";
+import { getCurrentUser } from "reduxStore/slices/authSlice";
+import { fetchPostsByUserId } from "reduxStore/slices/postSlice";
 import {
   getUserById,
   followUser,
   unfollowUser,
   getFollowers,
   getFollowings,
-} from "services/user.service";
+} from "reduxStore/slices/usersSlice";
+import {
+  PROFILE_TABS_MENU_ITEMS,
+  REDUX_ACTION,
+} from "constants/common.constant";
 
 import "./Profile.css";
 
@@ -39,20 +44,16 @@ function TabPanel(props) {
 
 const Profile = () => {
   const [openedUserId, setOpenedUserId] = useState("");
-  const [openedUser, setOpenedUser] = useState({});
-  const [user, setUser] = useState({});
-  const [followers, setFollowers] = useState([]);
-  const [followings, setFollowings] = useState([]);
-  const [posts, setPosts] = useState([]);
   const [isCurrentUser, setIsCurrentUser] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentTab, setCurrentTab] = useState("posts");
+  const openedUser = useSelector((state) => state?.profile?.user);
+  const followings = useSelector((state) => state?.profile?.followings);
+  const followers = useSelector((state) => state?.profile?.followers);
+  const user = useSelector((state) => state?.auth?.user);
+  const posts = useSelector((state) => state?.post?.posts);
   const [search] = useSearchParams();
-
-  useEffect(() => {
-    const user = getUser();
-    setUser(user);
-  }, []);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const userId = search.get("userId");
@@ -60,21 +61,15 @@ const Profile = () => {
   }, [search]);
 
   useEffect(() => {
-    user?._id && openedUserId && setIsCurrentUser(user?._id === openedUserId);
+    if (user?._id && openedUserId) {
+      setIsCurrentUser(user?._id === openedUserId);
+    }
     setCurrentTab("posts");
   }, [openedUserId, user?._id]);
 
   const getPosts = () => {
     const userId = search.get("userId");
-    userId &&
-      fetchPostsByUserId({ userId: userId })
-        .then((res) => {
-          const posts = res?.data?.posts;
-          setPosts(posts);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    userId && dispatch(fetchPostsByUserId({ userId: userId }));
   };
 
   useEffect(() => {
@@ -84,38 +79,32 @@ const Profile = () => {
     });
   }, [socket]);
 
-  const getCurrentUser = (userId) => {
-    getUserById({ userId: userId })
-      .then((res) => {
-        if (res?.status === 200) {
-          setOpenedUser(res?.data?.user);
-        }
-      })
-      .catch((error) => setOpenedUser({}));
+  const getProfileUser = () => {
+    dispatch(getUserById({ userId: openedUserId }));
+  };
+
+  const getUser = () => {
+    dispatch(getCurrentUser({ userId: user?._id }));
   };
 
   const getFollowersByUser = () => {
     const payload = {
       userId: openedUserId,
     };
-    getFollowers(payload)
-      .then((res) => setFollowers(res?.data?.followers || []))
-      .catch((error) => setFollowers([]));
+    dispatch(getFollowers(payload));
   };
 
   const getFollowingsByUser = () => {
     const payload = {
       userId: openedUserId,
     };
-    getFollowings(payload)
-      .then((res) => setFollowings(res?.data?.followings || []))
-      .catch((error) => setFollowings([]));
+    dispatch(getFollowings(payload));
   };
 
   useEffect(() => {
     if (openedUserId) {
       getPosts();
-      getCurrentUser(openedUserId);
+      getProfileUser();
       getFollowersByUser();
       getFollowingsByUser();
     }
@@ -125,23 +114,16 @@ const Profile = () => {
 
   const onFollow = () => {
     const payload = {
-      userId: openedUser?._id,
+      openedUserId: openedUser?._id,
+      userId: user?._id,
     };
 
-    followUser(user?._id, payload)
+    dispatch(followUser(payload))
       .then((res) => {
-        if (res?.status === 200) {
-          getUserById({ userId: user?._id }).then((res) => {
-            const currentUser = {
-              ...res?.data?.user,
-              token: user?.token,
-            };
-            setUser(currentUser);
-            localStorage.setItem("user", JSON.stringify(currentUser));
-          });
-          getCurrentUser(openedUserId);
+        if (res?.meta?.requestStatus === REDUX_ACTION.FULFILLED) {
+          getProfileUser();
           getFollowersByUser();
-          getFollowingsByUser();
+          getUser();
         }
       })
       .catch((err) => console.log(err));
@@ -149,23 +131,16 @@ const Profile = () => {
 
   const onUnfollow = () => {
     const payload = {
-      userId: openedUser?._id,
+      openedUserId: openedUser?._id,
+      userId: user?._id,
     };
 
-    unfollowUser(user?._id, payload)
+    dispatch(unfollowUser(payload))
       .then((res) => {
-        if (res?.status === 200) {
-          getUserById({ userId: user?._id }).then((res) => {
-            const currentUser = {
-              ...res?.data?.user,
-              token: user?.token,
-            };
-            setUser(currentUser);
-            localStorage.setItem("user", JSON.stringify(currentUser));
-          });
-          getCurrentUser(openedUserId);
+        if (res?.meta?.requestStatus === REDUX_ACTION.FULFILLED) {
+          getProfileUser();
           getFollowersByUser();
-          getFollowingsByUser();
+          getUser();
         }
       })
       .catch((err) => console.log(err));
@@ -231,7 +206,7 @@ const Profile = () => {
               <span className="profile-details-content">
                 {openedUser?.followings?.length === 1
                   ? "1 following"
-                  : `${openedUser?.following?.length || 0} following`}
+                  : `${openedUser?.followings?.length || 0} following`}
               </span>
             </div>
             {!isCurrentUser && (
@@ -285,7 +260,7 @@ const Profile = () => {
         <div className="profile-posts-container">
           <div className="profile-left-container">
             <AboutCard
-              user={isCurrentUser ? user : openedUser}
+              user={openedUser}
               isSticky={followers?.length <= 0 && followings?.length <= 0}
             />
             <FriendsCard
@@ -324,11 +299,11 @@ const Profile = () => {
         style={{ width: "100%" }}
       >
         <ProfileDetailsCard
-          user={isCurrentUser ? user : openedUser}
+          user={openedUser}
           isEditing={isEditing}
           isCurrentUser={isCurrentUser}
           onEdit={onEdit}
-          setUser={setUser}
+          getProfileUser={getProfileUser}
         />
       </TabPanel>
     </div>
