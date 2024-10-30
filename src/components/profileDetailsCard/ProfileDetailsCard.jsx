@@ -94,7 +94,11 @@ const ProfileDetailsCard = (props) => {
   const { values, handleChange, handleSubmit } = formik;
 
   return (
-    <Card className="about-tab-card" key={`about-tab-card`}>
+    <Card
+      className="about-tab-card"
+      key={`about-tab-card`}
+      data-testid="profile-details-card"
+    >
       <CardHeader
         className="card-header"
         title={`About`}

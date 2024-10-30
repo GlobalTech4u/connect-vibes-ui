@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "start:local": "env-cmd -f environments/.env.local react-scripts start",
-    "build:local": "env-cmd -f environments/.env.local react-scripts build"
+    "build:local": "env-cmd -f environments/.env.local react-scripts build",
+    "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage",
+    "test:watch": "react-scripts test --watchAll"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -15,10 +18,11 @@
     "@mui/material": "^6.1.1",
     "@reduxjs/toolkit": "^2.3.0",
     "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/react": "^15.0.6",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
     "formik": "^2.4.6",
+    "jest-mock-axios": "^4.7.3",
     "moment": "^2.30.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -26,13 +30,19 @@
     "react-redux": "^9.1.2",
     "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
+    "redux-mock-store": "^1.5.5",
+    "redux-thunk": "^3.1.0",
     "socket.io-client": "^4.8.0",
     "typescript": "^4.9.5",
     "use-axios-loader": "^1.1.0"
   },
   "devDependencies": {
-    "env-cmd": "^10.1.0",
-    "@babel/plugin-proposal-private-property-in-object": "^7.18.6"
+    "@babel/plugin-proposal-private-property-in-object": "^7.18.6",
+    "@babel/preset-env": "^7.25.9",
+    "@babel/preset-react": "^7.25.9",
+    "axios-mock-adapter": "^2.1.0",
+    "babel-jest": "^29.7.0",
+    "env-cmd": "^10.1.0"
   },
   "eslintConfig": {
     "extends": [
@@ -54,6 +64,14 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!axios)"
     ]
   }
 }

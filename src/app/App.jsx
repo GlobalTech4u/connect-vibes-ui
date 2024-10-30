@@ -21,7 +21,9 @@ function App() {
               <CircularProgress className="spinner" />
             </div>
           )}
-          <AppRoutes />
+          <div data-testid="app-routes">
+            <AppRoutes />
+          </div>
         </AuthProvider>
       </Provider>
     </div>

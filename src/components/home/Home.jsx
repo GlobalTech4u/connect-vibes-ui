@@ -54,7 +54,7 @@ const Home = () => {
       : "";
 
   return (
-    <div className="home-container">
+    <div className="home-container" data-testid="home-component">
       <Navbar
         toggleDrawer={toggleDrawer}
         onSearch={onSearch}

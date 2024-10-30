@@ -29,6 +29,7 @@ const CreatePost = (props) => {
           sx={{ bgcolor: red[500] }}
           aria-label="recipe"
           src={profilePicture}
+          alt="recipe"
         />
         <Textarea
           className="post-editor cursor-pointer"
