@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+// import PersonIcon from "@mui/icons-material/Person";
+// import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import {
   Avatar,
@@ -126,7 +126,8 @@ const Navbar = (props) => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      {/* Uncomment this code when follow and notifications service is up */}
+      {/* <MenuItem>
         <IconButton size="large" color="inherit">
           <Badge badgeContent={17} color="error">
             <NotificationsIcon />
@@ -135,7 +136,7 @@ const Navbar = (props) => {
         <p className="navbar-menu-item-mobile">
           {NAVBAR_MENU_ITEMS_MOBILE.NOTIFICATIONS}
         </p>
-      </MenuItem>
+      </MenuItem> */}
       <MenuItem onClick={navigateToProfile}>
         <IconButton size="large" aria-haspopup="true">
           <Avatar sx={{ width: 24, height: 24 }} src={profilePicture} />
@@ -192,7 +193,8 @@ const Navbar = (props) => {
           </div>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton size="large" color="inherit">
+            {/* Uncomment this code when follow and notifications service is up */}
+            {/* <IconButton size="large" color="inherit">
               <Badge badgeContent={1} color="error">
                 <PersonIcon />
               </Badge>
@@ -201,7 +203,7 @@ const Navbar = (props) => {
               <Badge badgeContent={17} color="error">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
             <IconButton
               size="large"
               edge="end"
