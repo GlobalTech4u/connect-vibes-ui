@@ -44,7 +44,6 @@ const Newsfeed = () => {
   };
 
   useEffect(() => {
-    console.log("=> useEffect ");
     if (user?._id) {
       getPosts();
       getFollowersByUser();
@@ -61,7 +60,7 @@ const Newsfeed = () => {
   const followersId = followers?.map((follower) => follower?._id);
 
   return (
-    <div className="news-feeds">
+    <div className="news-feeds" data-testid="news-feeds">
       <div className="news-feeds-left-container">
         <div className="newsfeed-create-post-container">
           <CreatePost

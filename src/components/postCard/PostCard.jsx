@@ -175,6 +175,7 @@ const PostCard = (props) => {
               component="img"
               image={attachment?.attachment?.path}
               alt="post-image"
+              data-testid="post-image"
             />
           );
         })}

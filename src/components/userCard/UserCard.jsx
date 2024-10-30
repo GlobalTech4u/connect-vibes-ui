@@ -27,6 +27,7 @@ const UserCard = (props) => {
       sx={{ marginTop: 2, marginLeft: 3, marginRight: 3 }}
       onClick={navigateToUserProfile}
       key={`search-${user?._id}`}
+      data-testid="user-search-card-container"
     >
       <CardContent className="card-content">
         <Avatar aria-label="recipe" src={profilePicturePath} />

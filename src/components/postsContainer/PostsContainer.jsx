@@ -8,7 +8,7 @@ const PostsContainer = (props) => {
   const { posts, userId, getPosts } = props;
 
   return (
-    <div className="posts-container">
+    <div className="posts-container" data-testid="post-container">
       {posts?.map((post) => {
         return (
           <PostCard
