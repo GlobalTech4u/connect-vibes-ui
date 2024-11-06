@@ -7,6 +7,7 @@ const LABELS = {
   LOGIN_TITLE: "Connect now",
   LOGIN_FOOTER: "Don't have an account?",
   LOGIN_FOOTER_LINK: "Register",
+  DELETE_POST: "Are you sure you want to delete this Post?",
 };
 
 export default LABELS;

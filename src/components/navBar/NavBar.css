@@ -3,24 +3,31 @@
     font-family: var(--font-primary);
     font-size: var(--font-size-large);
     font-weight: var(--font-weight-medium);
+
+    @media (max-width: 900px) {
+      display: none;
+    }
   }
 
   .search-wrapper {
     display: flex;
-    position: relative;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
     border-radius: 30px;
     background-color: white;
     color: black;
     margin-right: 8px;
     margin-left: 8px;
-    width: 100%;
-    min-width: 120px;
-  }
+    width: auto;
+    min-width: 480px;
 
-  @media (min-width: 1200px) {
-    .search-wrapper {
-      width: auto;
-      min-width: 480px;
+    @media (max-width: 900px) {
+      min-width: 360px;
+    }
+
+    @media (max-width: 500px) {
+      min-width: 240px;
     }
   }
 

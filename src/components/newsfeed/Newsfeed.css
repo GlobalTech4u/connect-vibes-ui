@@ -12,15 +12,23 @@
     display: flex !important;
     flex-direction: column !important;
     row-gap: 24px !important;
-    flex: 0 1 70% !important;
+    flex: 0 1 70%;
+
+    @media (max-width: 700px) {
+      flex: 0 1 100%;
+    }
   }
 
   .news-feeds-right-container {
-    display: flex !important;
+    display: flex;
     flex-direction: column !important;
     row-gap: 24px !important;
     flex: 0 1 30% !important;
     height: 100% !important;
+
+    @media (max-width: 700px) {
+      display: none;
+    }
   }
 
   .newsfeed-create-post-container {

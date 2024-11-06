@@ -1,4 +1,7 @@
 .modal-container {
+  overflow: auto;
+  max-height: 100vh;
+
   .model-content {
     display: flex;
     flex-direction: column;
@@ -13,6 +16,26 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  .show-image-preview {
+    display: flex;
+    flex-direction: row;
+    column-gap: 12px;
+    row-gap: 12px;
+    flex-wrap: wrap;
+    max-height: 210px;
+    overflow: auto;
+  }
+
+  .image-preview-container {
+    position: relative;
+  }
+
+  .remove-image-icon {
+    position: absolute;
+    top: 2px;
+    right: 2px;
   }
 
   .create-post-modal-container {

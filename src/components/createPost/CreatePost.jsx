@@ -20,10 +20,14 @@ const CreatePost = (props) => {
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
 
   const onShowCreatePostModal = () => setShowCreatePostModal(true);
-  const onHideCreatePostModal = () => setShowCreatePostModal(false);
+
+  const onHideCreatePostModal = (event) => {
+    event?.stopPropagation();
+    setShowCreatePostModal(false);
+  };
 
   return (
-    <Card className="create-post-container">
+    <Card className="create-post-container" onClick={onShowCreatePostModal}>
       <div className="post-editor-container">
         <Avatar
           sx={{ bgcolor: red[500] }}
@@ -35,34 +39,25 @@ const CreatePost = (props) => {
           className="post-editor cursor-pointer"
           minRows={2}
           maxRows={3}
+          disabled
           placeholder={WRITE_POST_PLACEHOLDER}
           size="md"
-          onClick={onShowCreatePostModal}
         />
       </div>
       <CardActions className="attachments-container">
-        <div
-          className="share-option cursor-pointer"
-          onClick={onShowCreatePostModal}
-        >
+        <div className="share-option cursor-pointer">
           <PhotoLibraryIcon color="primary" />
           <span className="shareOptionText">
             {CREATE_POST_ATTACHMENTS_OPTIONS.PHOTOS}
           </span>
         </div>
-        <div
-          className="share-option cursor-pointer"
-          onClick={onShowCreatePostModal}
-        >
+        <div className="share-option cursor-pointer">
           <AddLocationAltIcon color="primary" />
           <span className="shareOptionText">
             {CREATE_POST_ATTACHMENTS_OPTIONS.LOCATION}
           </span>
         </div>
-        <div
-          className="share-option cursor-pointer"
-          onClick={onShowCreatePostModal}
-        >
+        <div className="share-option cursor-pointer">
           <SentimentVerySatisfiedIcon color="primary" />
           <span className="shareOptionText">
             {CREATE_POST_ATTACHMENTS_OPTIONS.FEELINGS}

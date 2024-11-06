@@ -1,5 +1,5 @@
 .MuiDrawer-paper {
-  top: 64px !important;
+  top: var(--navbar-height) !important;
   padding: 16px 24px;
 }
 

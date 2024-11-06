@@ -1,15 +1,18 @@
-import React, { useEffect } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import CreatePost from "components/createPost/CreatePost";
 import FriendsCard from "components/friendsCard/FriendsCard";
-import PostsContainer from "components/postsContainer/PostsContainer";
 import { getFullName } from "helpers/user.helper";
 import { fetchNewsFeeds } from "reduxStore/slices/postSlice";
 import { getFollowers, getFollowings } from "reduxStore/slices/usersSlice";
 import { socket } from "utils/socket";
 
 import "./Newsfeed.css";
+
+const PostsContainer = lazy(() =>
+  import("components/postsContainer/PostsContainer")
+);
 
 const Newsfeed = () => {
   const user = useSelector((state) => state?.auth?.user);
@@ -72,11 +75,13 @@ const Newsfeed = () => {
           />
         </div>
         <div className="newsfeed-view-posts-container">
-          <PostsContainer
-            posts={posts}
-            userId={user?._id}
-            getPosts={getPosts}
-          />
+          <Suspense fallback={<div>Loading posts...</div>}>
+            <PostsContainer
+              posts={posts}
+              userId={user?._id}
+              getPosts={getPosts}
+            />
+          </Suspense>
         </div>
       </div>
       <div className="news-feeds-right-container">

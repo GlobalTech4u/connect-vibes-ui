@@ -5,7 +5,7 @@
 .home-body-container {
   display: flex;
   flex-direction: row;
-  margin-top: 64px;
+  margin-top: var(--navbar-height);
   justify-content: space-between;
   background-color: var(--color-light-gray);
   position: relative;
@@ -24,7 +24,7 @@
   height: min-content;
   max-height: 40%;
   position: fixed !important;
-  top: 64px !important;
+  top: var(--navbar-height) !important;
   left: 50% !important;
   transform: translate(-50%, 0%);
   z-index: 1000 !important;

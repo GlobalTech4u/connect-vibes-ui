@@ -1,0 +1,9 @@
+.delete-post-modal-text {
+  text-align: center;
+}
+
+.delete-post-modal-actions {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
