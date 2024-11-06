@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Box, Button, Divider, Tab, Tabs } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 import AboutCard from "components/aboutCard/AboutCard";
 import CreatePost from "components/createPost/CreatePost";
 import FriendsCard from "components/friendsCard/FriendsCard";
-import PostsContainer from "components/postsContainer/PostsContainer";
 import ProfileDetailsCard from "components/profileDetailsCard/ProfileDetailsCard";
 import { getFullName } from "helpers/user.helper";
 import { socket } from "utils/socket";
 import { getCurrentUser } from "reduxStore/slices/authSlice";
 import { fetchPostsByUserId } from "reduxStore/slices/postSlice";
+import { MESSAGES } from "constants/message.constant";
 import {
   getUserById,
   followUser,
@@ -25,6 +26,10 @@ import {
 } from "constants/common.constant";
 
 import "./Profile.css";
+
+const PostsContainer = lazy(() =>
+  import("components/postsContainer/PostsContainer")
+);
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -121,12 +126,13 @@ const Profile = () => {
     dispatch(followUser(payload))
       .then((res) => {
         if (res?.meta?.requestStatus === REDUX_ACTION.FULFILLED) {
+          toast.success(MESSAGES.FOLLOW_USER_SUCCESS);
           getProfileUser();
           getFollowersByUser();
           getUser();
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(MESSAGES.FOLLOW_USER_ERROR));
   };
 
   const onUnfollow = () => {
@@ -138,12 +144,13 @@ const Profile = () => {
     dispatch(unfollowUser(payload))
       .then((res) => {
         if (res?.meta?.requestStatus === REDUX_ACTION.FULFILLED) {
+          toast.success(MESSAGES.UNFOLLOW_USER_SUCCESS);
           getProfileUser();
           getFollowersByUser();
           getUser();
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(MESSAGES.UNFOLLOW_USER_ERROR));
   };
 
   const handleTabChange = (event, newValue) => {
@@ -282,13 +289,15 @@ const Profile = () => {
               followersId={followersId}
               name={name}
             />
-            {posts?.length > 0 && (
-              <PostsContainer
-                posts={posts}
-                userId={user?._id}
-                getPosts={getPosts}
-              />
-            )}
+            <Suspense fallback={<div>Loading posts...</div>}>
+              {posts?.length > 0 && (
+                <PostsContainer
+                  posts={posts}
+                  userId={user?._id}
+                  getPosts={getPosts}
+                />
+              )}
+            </Suspense>
           </div>
         </div>
       </TabPanel>

@@ -14,11 +14,12 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const user = getUser();
     const token = user?.token;
+    const refreshToken = user?.refreshToken;
     setToken(token || null);
     setIsLoggedIn(!!token);
     setLoading(false);
     initializeSocket(user?._id || null);
-    initializeAxios(token || null);
+    initializeAxios(token || null, refreshToken || null);
   }, [localStorage.getItem("user")]);
 
   return (

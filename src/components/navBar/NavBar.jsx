@@ -10,7 +10,6 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import {
   Avatar,
   AppBar,
-  Badge,
   Box,
   IconButton,
   Input,
@@ -191,7 +190,6 @@ const Navbar = (props) => {
               onClick={onShowSearchResults}
             />
           </div>
-          <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {/* Uncomment this code when follow and notifications service is up */}
             {/* <IconButton size="large" color="inherit">

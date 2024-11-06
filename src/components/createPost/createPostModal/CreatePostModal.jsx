@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 import { Avatar, Button, Modal } from "@mui/material";
 import { red } from "@mui/material/colors";
@@ -8,10 +9,12 @@ import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
 import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import Textarea from "@mui/joy/Textarea";
 
 import { socket } from "utils/socket";
 import { createPost } from "reduxStore/slices/postSlice";
+import { MESSAGES } from "constants/message.constant";
 import {
   CREATE_POST_ATTACHMENTS_OPTIONS,
   FILE_TYPES,
@@ -24,6 +27,7 @@ import "./CreatePostModal.css";
 const CreatePostModal = (props) => {
   const [content, setContent] = useState("");
   const [files, setFiles] = useState([]);
+  const [previews, setPreviews] = useState([]);
   const {
     profilePicture,
     getPosts,
@@ -41,14 +45,12 @@ const CreatePostModal = (props) => {
   };
 
   const onPostFileUpload = (attachments) => {
-    if (attachments?.length > 0) {
-      return setFiles(attachments);
+    const filesArray = Array.from(attachments);
+    if (filesArray.length > 0) {
+      setFiles([...files, ...filesArray]);
+      const newPreviews = filesArray.map((file) => URL.createObjectURL(file));
+      setPreviews([...previews, ...newPreviews]);
     }
-    if (files?.length > 0) {
-      return setFiles(files);
-    }
-
-    return setFiles([]);
   };
 
   const onCreatePost = async () => {
@@ -61,15 +63,25 @@ const CreatePostModal = (props) => {
 
       dispatch(createPost(payload)).then((res) => {
         if (res?.meta?.requestStatus === REDUX_ACTION.FULFILLED) {
+          toast.success(MESSAGES.POST_CREATED_SUCCESS);
           getPosts();
           onHideCreatePostModal();
           socket?.emit("add_post", {
             userId: userId,
             followers: followersId,
           });
+        } else {
+          toast.error(MESSAGES.POST_CREATED_ERROR);
         }
       });
     }
+  };
+
+  const onRemoveImage = (index) => {
+    const newFiles = files.filter((_, i) => i !== index);
+    const newPreviews = previews.filter((_, i) => i !== index);
+    setFiles(newFiles);
+    setPreviews(newPreviews);
   };
 
   return (
@@ -108,6 +120,23 @@ const CreatePostModal = (props) => {
                 onChange={onChangeContent}
                 value={content}
               />
+            </div>
+            <div className="show-image-preview">
+              {previews.map((preview, index) => (
+                <div className="image-preview-container" key={index}>
+                  <CancelRoundedIcon
+                    className="remove-image-icon cursor-pointer"
+                    onClick={() => onRemoveImage(index)}
+                  />
+                  <img
+                    key={index}
+                    src={preview}
+                    height={200}
+                    alt={`preview ${index}`}
+                    className="image-preview"
+                  />
+                </div>
+              ))}
             </div>
             <div>
               <FileUploader

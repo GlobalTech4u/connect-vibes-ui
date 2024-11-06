@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { TextField, Alert, Button } from "@mui/material";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 import LABELS from "constants/label.constant";
 import initializeAxios from "services/axios.service";
@@ -11,6 +12,7 @@ import { loginUser } from "reduxStore/slices/authSlice";
 import { AuthContext } from "components/authContext/AuthContext";
 import { validateLogin } from "helpers/validate.helper";
 import { REDUX_ACTION } from "constants/common.constant";
+import { MESSAGES } from "constants/message.constant";
 
 import "./Login.css";
 
@@ -30,13 +32,17 @@ const Login = () => {
         if (res?.meta?.requestStatus === REDUX_ACTION.FULFILLED) {
           const user = res?.payload?.user;
           const token = user?.token;
+          const refreshToken = user?.refreshToken;
           localStorage.setItem("user", JSON.stringify(user));
           initializeSocket(user?._id);
-          initializeAxios(token);
+          initializeAxios(token, refreshToken);
           navigate("/");
+        } else {
+          toast.error(res?.payload?.message);
         }
       })
       .catch((err) => {
+        toast.error(MESSAGES.LOGIN_ERROR);
         setToken("");
         localStorage.removeItem("user");
       });

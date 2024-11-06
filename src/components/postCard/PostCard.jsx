@@ -1,6 +1,6 @@
 import * as React from "react";
-import moment from "moment";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 import {
   Card,
@@ -20,6 +20,9 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import { REDUX_ACTION } from "constants/common.constant";
 import { getFullName } from "helpers/user.helper";
+import { MESSAGES } from "constants/message.constant";
+import { getPostTime } from "helpers/post.helper";
+import DeletePostModal from "components/postCard/DeletePostModal/DeletePostModal";
 import {
   deletePost,
   likePost,
@@ -36,6 +39,7 @@ const options = ["Delete"];
 const PostCard = (props) => {
   const { post, userId, getPosts } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [showDeletePostModal, setShowDeletePostModal] = React.useState(false);
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
 
@@ -55,10 +59,13 @@ const PostCard = (props) => {
       dispatch(deletePost(payload))
         .then((res) => {
           if (res?.meta?.requestStatus === REDUX_ACTION.FULFILLED) {
+            toast.success(MESSAGES.POST_DELETED_SUCCESS);
             getPosts();
+          } else {
+            toast.error(MESSAGES.POST_DELETED_ERROR);
           }
         })
-        .catch((error) => console.log(error));
+        .catch((error) => toast.error(MESSAGES.POST_DELETED_ERROR));
     }
 
     handleClose();
@@ -75,7 +82,7 @@ const PostCard = (props) => {
           getPosts();
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => toast.error(MESSAGES.LIKE_POST_ERROR));
   };
 
   const onUnlikePost = () => {
@@ -89,7 +96,7 @@ const PostCard = (props) => {
           getPosts();
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => toast.error(MESSAGES.UNLIKE_POST_ERROR));
   };
 
   const onSharePost = () => {
@@ -98,6 +105,10 @@ const PostCard = (props) => {
         getPosts();
       }
     });
+  };
+
+  const onHideDeletePostModal = () => {
+    setShowDeletePostModal(false);
   };
 
   const userName = getFullName(post.firstName, post.lastName);
@@ -151,7 +162,7 @@ const PostCard = (props) => {
                 {options.map((option) => (
                   <MenuItem
                     key={option}
-                    onClick={() => handleSubMenuClick(option)}
+                    onClick={() => setShowDeletePostModal(true)}
                   >
                     {option}
                   </MenuItem>
@@ -161,7 +172,7 @@ const PostCard = (props) => {
           )
         }
         title={userName}
-        subheader={moment(post?.updatedAt).format("YYYY/MM/DD kk:mm")}
+        subheader={getPostTime(post?.updatedAt)}
       />
 
       <CardContent className="post-card-content">
@@ -194,6 +205,11 @@ const PostCard = (props) => {
         )}
         <ShareIcon onClick={onSharePost} className="cursor-pointer" />
       </CardActions>
+      <DeletePostModal
+        showDeletePostModal={showDeletePostModal}
+        onHideDeletePostModal={onHideDeletePostModal}
+        handleSubMenuClick={handleSubMenuClick}
+      />
     </Card>
   );
 };

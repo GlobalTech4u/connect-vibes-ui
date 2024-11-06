@@ -5,6 +5,10 @@
     width: 100%;
   }
 
+  .MuiCardMedia-root {
+    max-height: 200px;
+  }
+
   .MuiTypography-root {
     font-family: var(--font-primary);
     font-weight: var(--font-weight-medium);
@@ -34,7 +38,7 @@
 
   .post-card-attachments {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     row-gap: 8px;
     column-gap: 8px;
     padding: 8px;

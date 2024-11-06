@@ -1,46 +1,47 @@
-# Getting Started with Create React App
+# Connect Vibes UI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is social media application build using the MERN stack (MongoDB, Express, React, Node.js). The application should allow users to post updates, view updates from others, and like or comment on posts. The focus should be on building a real-time, interactive feed.
 
-## Available Scripts
+# Pre-requisites
 
-In the project directory, you can run:
+Install Node.js version 20.17.0
 
-### `npm start`
+# Getting started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Clone the repository
+  git clone https://github.com/GlobalTech4u/connect-vibes-ui.git
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Navigate to folder
+  Example - cd connect-vibes-ui
 
-### `npm test`
+- Install all dependencies
+  npm install
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Create .env.local file
+  Copy the .env.sample (Path to .env.sample file - connect-vibes-ui\samples\.env.sample) file and paste in environments folder (Path to create file - connect-vibes-ui\environments\.env.local)
+  Now rename the .env.sample file to .env.local
 
-### `npm run build`
+- Contents of .env file
+  REACT_APP_BASE_API_URL=http://localhost:8080
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Run react-app locally
+  npm run start:local
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Build react-app locally
+  npm run build:local
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Testing
 
-### `npm run eject`
+The tests are written in Mocha and the assertions done using jest
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+"redux-mock-store": "^1.5.5",
+"axios-mock-adapter": "^2.1.0",
+"@testing-library/jest-dom": "^5.17.0",
+"@testing-library/react": "^15.0.6",
+"@testing-library/user-event": "^13.5.0",
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Running tests using NPM Scripts
+  npm run test
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Running test coverage using NPM Scripts
+  npm run test:coverage

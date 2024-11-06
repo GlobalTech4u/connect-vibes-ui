@@ -3,19 +3,25 @@ import { URLS_CONSTANT } from "constants/url.constant";
 import { getUser } from "helpers/user.helper";
 import { axios } from "services/axios.service";
 
-export const loginUser = createAsyncThunk("auth/login", async (payload) => {
-  return axios
-    .post(URLS_CONSTANT.login, payload, {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    })
-    .then((res) => {
-      if (res?.status === 200) {
-        return { user: res?.data?.user };
-      }
-    });
-});
+export const loginUser = createAsyncThunk(
+  "auth/login",
+  async (payload, { rejectWithValue }) => {
+    return axios
+      .post(URLS_CONSTANT.login, payload, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+      .then((res) => {
+        if (res?.status === 200) {
+          return { user: res?.data?.user };
+        }
+      })
+      .catch((error) => {
+        return rejectWithValue(error?.response?.data);
+      });
+  }
+);
 
 export const getCurrentUser = createAsyncThunk(
   "auth/getCurrentUser",
@@ -80,7 +86,7 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.status = "failed";
         state.user = {};
-        state.error = action.error.message;
+        state.error = action.payload.message;
       })
       .addCase(getCurrentUser.pending, (state) => {
         state.status = "loading";

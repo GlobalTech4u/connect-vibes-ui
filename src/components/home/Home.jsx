@@ -41,6 +41,9 @@ const Home = () => {
   const toggleDrawer = () => setShowDrawer(!showDrawer);
 
   const onSearch = (event) => {
+    if (!!event?.target?.value && !showSearchResults) {
+      setShowSearchResults(true);
+    }
     setSearchQuery(event?.target?.value || "");
   };
 

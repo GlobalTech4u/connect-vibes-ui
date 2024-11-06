@@ -109,6 +109,10 @@
     flex-direction: column;
     row-gap: 24px;
     flex: 0 1 35%;
+
+    @media (max-width: 700px) {
+      display: none;
+    }
   }
 
   .profile-right-container {
@@ -116,6 +120,10 @@
     flex-direction: column;
     row-gap: 24px;
     flex: 0 1 65%;
+
+    @media (max-width: 700px) {
+      flex: 0 1 100%;
+    }
   }
 
   .user-profile-about-container {
