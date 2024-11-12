@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import CreatePost from "components/createPost/CreatePost";
 import FriendsCard from "components/friendsCard/FriendsCard";
+import PostContainerSkeleton from "skeletons/PostContainerSkeleton/PostContainerSkeleton";
 import { getFullName } from "helpers/user.helper";
 import { fetchNewsFeeds } from "reduxStore/slices/postSlice";
 import { getFollowers, getFollowings } from "reduxStore/slices/usersSlice";
@@ -75,7 +76,7 @@ const Newsfeed = () => {
           />
         </div>
         <div className="newsfeed-view-posts-container">
-          <Suspense fallback={<div>Loading posts...</div>}>
+          <Suspense fallback={<PostContainerSkeleton />}>
             <PostsContainer
               posts={posts}
               userId={user?._id}

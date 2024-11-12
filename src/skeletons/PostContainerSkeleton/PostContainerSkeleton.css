@@ -1,0 +1,24 @@
+.post-container-skeleton {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+
+  .post-header {
+    display: flex;
+    flex-direction: row;
+    column-gap: 12px;
+  }
+
+  .name-time {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2px;
+    width: 100%;
+  }
+
+  .post-body {
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+  }
+}
