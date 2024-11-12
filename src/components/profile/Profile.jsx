@@ -8,6 +8,7 @@ import AboutCard from "components/aboutCard/AboutCard";
 import CreatePost from "components/createPost/CreatePost";
 import FriendsCard from "components/friendsCard/FriendsCard";
 import ProfileDetailsCard from "components/profileDetailsCard/ProfileDetailsCard";
+import PostContainerSkeleton from "skeletons/PostContainerSkeleton/PostContainerSkeleton";
 import { getFullName } from "helpers/user.helper";
 import { socket } from "utils/socket";
 import { getCurrentUser } from "reduxStore/slices/authSlice";
@@ -289,7 +290,7 @@ const Profile = () => {
               followersId={followersId}
               name={name}
             />
-            <Suspense fallback={<div>Loading posts...</div>}>
+            <Suspense fallback={<PostContainerSkeleton />}>
               {posts?.length > 0 && (
                 <PostsContainer
                   posts={posts}
